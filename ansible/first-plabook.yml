@@ -1,0 +1,25 @@
+---
+# hyphen shows  starting of the yaml file
+
+- name : Install and Start nginx webserver  # Define the function of playbook
+  hosts : webservers # the ipaddresses you want to let this ansible playbook perform specific tasks.  In Inventory file, servers are grouped . if you are installing webservers then it becomes a webserver and if you are installing database in it then it become database server , grouping is just labelling the servers according to the tasks we are going to perfor on those servers IP's
+
+  become : yes  # only use this if your user doesn't have root permissions because package manager commands needs root level access. If you're using root user than skip it!
+
+  tasks :
+    - name : Update apt package
+      shell : apt-get update
+
+    - name : Install nginx
+      apt :
+       name : nginx
+       state : present   # to install the nginx
+
+    - name : Start nginx    # match the indentation and then write after hyphen , it will act as another tasks that this playbook will execute     
+      service : 
+        name : nginx
+        state : started  # to start the nginx
+
+
+#  - name : Second playbook can be start by just matching indentation with above playbook name and then start writing your playbook.  this way we could write multiple playbook inside a single ansible playbook. 
+
